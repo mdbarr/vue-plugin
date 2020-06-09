@@ -21,22 +21,26 @@ export default {
     Vue.filter('capitalize', transforms.capitalize);
     Vue.filter('currency', transforms.currency);
     Vue.filter('duration', transforms.duration);
-    Vue.filter('lowercase', utils.lowercase);
-    Vue.filter('number', utils.number);
-    Vue.filter('reverse', utils.reverse);
+    Vue.filter('lowercase', transforms.lowercase);
+    Vue.filter('number', transforms.number);
+    Vue.filter('reverse', transforms.reverse);
     Vue.filter('round', utils.precisionRound);
-    Vue.filter('trim', utils.trim);
-    Vue.filter('uppercase', utils.uppercase);
+    Vue.filter('trim', transforms.trim);
+    Vue.filter('uppercase', transforms.uppercase);
 
     // Utilities
     const $utils = {
       clone: (object) => JSON.parse(JSON.stringify(object)),
+      debounce: utils.debounce,
       deepClone: utils.deepClone,
       expand: utils.expand,
       filter: utils.filter,
       flatten: utils.flatten,
       merge: utils.merge,
+      milliseconds: utils.milliseconds,
+      once: utils.once,
       project: utils.project,
+      remove: utils.remove,
       resolve: utils.resolve,
       resolves: utils.resolves,
       set (object, path, value, delimiter) {
@@ -78,7 +82,7 @@ export default {
     const mock = (options, response = {}) => Promise.resolve(response);
 
     function api (method, url, options) {
-      const config = utils.clone(defaults);
+      const config = $utils.clone(defaults);
 
       config.url = url;
       config.data = {};
@@ -282,7 +286,8 @@ export default {
 
     // Navigation
     Vue.prototype.$navigate = function (where) {
-      if (typeof where === 'string' && (!this.$router.currentRoute || this.$router.currentRoute.name !== where)) {
+      if (typeof where === 'string' &&
+        (!this.$router.currentRoute || this.$router.currentRoute.name !== where)) {
         this.$router.push({ name: where });
       } else if (typeof where === 'object') {
         this.$router.push(where);
