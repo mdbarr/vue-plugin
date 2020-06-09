@@ -1,6 +1,7 @@
 import axios from 'axios';
 import utils from 'barrkeep/utils';
 import events from '@metastack/events';
+import transforms from 'barrkeep/transforms';
 const qs = require('querystring');
 
 const paramsRegExp = /\/:([^/]+)/g;
@@ -15,8 +16,17 @@ const state = {};
 export default {
   install (Vue) {
     // Filters
-    Vue.filter('capitalize', utils.capitalize);
-    Vue.filter('round', utils.round);
+    Vue.filter('bytes', transforms.bytes);
+    Vue.filter('camelcase', transforms.camelcase);
+    Vue.filter('capitalize', transforms.capitalize);
+    Vue.filter('currency', transforms.currency);
+    Vue.filter('duration', transforms.duration);
+    Vue.filter('lowercase', utils.lowercase);
+    Vue.filter('number', utils.number);
+    Vue.filter('reverse', utils.reverse);
+    Vue.filter('round', utils.precisionRound);
+    Vue.filter('trim', utils.trim);
+    Vue.filter('uppercase', utils.uppercase);
 
     // Event handlers
     const $events = new events.EventBus();
