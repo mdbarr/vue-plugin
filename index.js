@@ -189,28 +189,14 @@ export default {
 
         this.socket.onmessage = (message) => {
           try {
-            if (message.data instanceof ArrayBuffer) {
-              const typeView = new Uint8Array(message.data, 0, 1);
-              if (typeView[0] === 0) {
-                const image = utils.deserializeImageUpdate(message.data);
-
-                $events.emit({
-                  type: `${ this.name }:ws:image`,
-                  data: image,
-                });
-              } else {
-                console.log(`${ this.name }: unknown message type`, typeView[0]);
-              }
+            const event = JSON.parse(message.data);
+            if (event.type) {
+              $events.emit(event);
             } else {
-              const event = JSON.parse(message.data);
-              if (event.type) {
-                $events.emit(event);
-              } else {
-                $events.emit({
-                  type: `${ this.name }:ws:message`,
-                  data: event,
-                });
-              }
+              $events.emit({
+                type: `${ this.name }:ws:message`,
+                data: event,
+              });
             }
           } catch (error) {
             console.log(`${ this.name }: websocket error`, error);
