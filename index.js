@@ -28,6 +28,48 @@ export default {
     Vue.filter('trim', utils.trim);
     Vue.filter('uppercase', utils.uppercase);
 
+    // Utilities
+    const $utils = {
+      clone: (object) => JSON.parse(JSON.stringify(object)),
+      deepClone: utils.deepClone,
+      expand: utils.expand,
+      filter: utils.filter,
+      flatten: utils.flatten,
+      merge: utils.merge,
+      project: utils.project,
+      resolve: utils.resolve,
+      resolves: utils.resolves,
+      set (object, path, value, delimiter) {
+        if (!object || !path) {
+          return false;
+        }
+
+        const parts = utils.dividePath(path, delimiter);
+        const key = parts.pop();
+
+        for (const part of parts) {
+          if (object[part] === undefined) {
+            if (typeof part === 'number') {
+              object[part] = [];
+            } else {
+              object[part] = {};
+            }
+          }
+
+          object = object[part];
+
+          if (!object) {
+            return false;
+          }
+        }
+
+        Vue.set(object, key, value);
+
+        return true;
+      },
+    };
+    Vue.prototype.$utils = $utils;
+
     // Event handlers
     const $events = new events.EventBus();
     Vue.prototype.$events = $events;
