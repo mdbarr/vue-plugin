@@ -33,6 +33,8 @@ export default {
       clone: (object) => JSON.parse(JSON.stringify(object)),
       debounce: utils.debounce,
       deepClone: utils.deepClone,
+      duration: utils.duration,
+      equal: utils.deepEqual,
       expand: utils.expand,
       filter: utils.filter,
       flatten: utils.flatten,
@@ -43,6 +45,7 @@ export default {
       remove: utils.remove,
       resolve: utils.resolve,
       resolves: utils.resolves,
+      round: utils.precisionRound,
       set (object, path, value, delimiter) {
         if (!object || !path) {
           return false;
@@ -71,6 +74,8 @@ export default {
 
         return true;
       },
+      size: utils.size,
+      timestamp: utils.timestamp,
     };
     Vue.prototype.$utils = $utils;
 
