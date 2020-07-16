@@ -154,140 +154,175 @@ export default {
 
     Vue.prototype.$api = $api;
 
-    // Events Socket
-    function EventsSocket (name, url, options) {
-      this.socket = null;
-      this.connected = false;
+    class EventSocket {
+      constructor (url, options) {
+        this.socket = null;
 
-      // Configuration
-      this.name = name;
-      this.url = url;
-      this.persistent = false;
-      this.auto = false;
-      this.retries = 100;
-      this.delay = 500;
+        this.url = url;
+        this.persistent = false;
+        this.autoconnect = false;
 
-      this.configure = (config) => {
-        if (config.name) {
-          this.name = config.name;
+        this.retries = 10;
+        this.delay = 500;
+
+        this._connected = false;
+        this._timer = null;
+        this._retries = 0;
+
+        if (options) {
+          this.configure(options);
         }
 
-        if (config.url) {
-          this.url = config.url;
+        if (this.auto) {
+          this.connect();
+        }
+      }
+
+      close () {
+        if (this.socket && this._connected) {
+          this.socket.close();
+        }
+      }
+
+      configure ({
+        url, persistent, autoconnect, retries, delay,
+      } = {}) {
+        if (url) {
+          this.url = url;
         }
 
-        if (config.persistent !== undefined) {
-          this.persistent = config.persistent;
+        if (persistent !== undefined) {
+          this.persistent = persistent;
         }
 
-        if (config.auto !== undefined) {
-          this.auto = config.auto;
+        if (autoconnect !== undefined) {
+          this.autoconnect = autoconnect;
         }
 
-        if (typeof config.retries === 'number') {
-          this.retries = config.retries;
+        if (typeof retries === 'number') {
+          this.retries = Math.max(retries, 0);
         }
 
-        if (typeof config.delay === 'number') {
-          this.delay = config.delay;
+        if (typeof delay === 'number') {
+          this.delay = Math.max(delay, 0);
         }
-      };
+      }
 
-      let retries = 0;
-      let timer;
-
-      this.reconnect = () => {
-        if (timer) {
-          clearTimeout(timer);
-        }
-
-        if (++retries < this.retries) {
-          timer = setTimeout(this.connect, this.delay);
-        }
-      };
-
-      this.connect = () => {
+      connect () {
         this.socket = new WebSocket(this.url);
         this.socket.binaryType = 'arraybuffer';
 
-        this.socket.onopen = () => {
-          if (timer) {
-            clearTimeout(timer);
-          }
-          retries = 0;
-          this.connected = true;
-        };
+        this.socket.onclose = this.onclose;
+        this.socket.onerror = this.onerror;
+        this.socket.onmessage = this.onmessage;
+        this.socket.onopen = this.onopen;
+      }
 
-        this.socket.onclose = () => {
-          this.connected = false;
-          if (this.persistent) {
-            this.reconnect();
-          }
-        };
-
-        this.socket.onerror = (error) => {
-          this.connected = false;
-
-          $events.emit({
-            type: `${ this.name }:ws:error`,
-            data: error,
-          });
-
-          if (this.persistent) {
-            this.reconnect();
-          }
-        };
-
-        this.socket.onmessage = (message) => {
-          try {
-            const event = JSON.parse(message.data);
-            if (event.type) {
-              $events.emit(event);
-            } else {
-              $events.emit({
-                type: `${ this.name }:ws:message`,
-                data: event,
-              });
-            }
-          } catch (error) {
-            console.log(`${ this.name }: websocket error`, error);
-          }
-        };
-      };
-
-      this.close = () => {
-        if (this.socket && this.connected) {
-          this.socket.close();
+      ensure () {
+        if (!this._connected) {
+          this.connect();
         }
-      };
+      }
 
-      this.send = (object) => {
-        if (this.connected && this.socket.readyState === 1) {
+      onclose () {
+        this._connected = false;
+        if (this.persistent) {
+          this.reconnect();
+        }
+      }
+
+      onerror (error) {
+        this._connected = false;
+
+        console.error(error);
+
+        if (this.persistent) {
+          this.reconnect();
+        }
+      }
+
+      onmessage (message) {
+        try {
+          const data = JSON.parse(message.data);
+          console.log(data);
+        } catch (error) {
+          console.log(`${ this.name }: websocket error`, error);
+        }
+      }
+
+      onopen () {
+        if (this._timer) {
+          clearTimeout(this._timer);
+        }
+        this._retries = 0;
+        this._connected = true;
+      }
+
+      send (data) {
+        if (this._connected && this.socket.readyState === WebSocket.OPEN) {
+          if (typeof data !== 'object') {
+            this.socket.send(data);
+          } else {
+            try {
+              const message = JSON.stringify(data);
+              this.socket.send(message);
+            } catch (error) {
+              console.error(error);
+            }
+          }
+        }
+      }
+    }
+
+    class EventBusSocket extends EventSocket {
+      constructor (name, url, options) {
+        super(url, options);
+
+        this.name = name;
+        this.events = $events;
+      }
+
+      configure (options) {
+        super.configure(options);
+
+        if (options.bus) {
+          this.events = options.bus;
+        }
+        if (options.events) {
+          this.events = options.events;
+        }
+      }
+
+      onmessage (message) {
+        try {
+          const event = JSON.parse(message.data);
+          if (event.type) {
+            this.events.emit(event);
+          } else {
+            this.events.emit({
+              type: `${ this.name }:ws:message`,
+              data: event,
+            });
+          }
+        } catch (error) {
+          console.error(`${ this.name }: websocket error`, error);
+        }
+      }
+
+      send (object) {
+        if (this._connected && this.socket.readyState === WebSocket.OPEN) {
           try {
             const message = JSON.stringify(object);
             this.socket.send(message);
           } catch (error) {
-            console.log(`${ this.name }: websocket error`, error);
+            console.error(`${ this.name }: websocket error`, error);
           }
         }
-      };
-
-      this.ensure = () => {
-        if (!this.connected) {
-          this.connect();
-        }
-      };
-
-      if (options) {
-        this.configure(options);
-      }
-
-      if (this.auto) {
-        this.connect();
       }
     }
 
-    Vue.prototype.$EventsSocket = EventsSocket;
+    Vue.prototype.$EventSocket = EventSocket;
+    Vue.prototype.$EventBusSocket = EventBusSocket;
 
     // Navigation
     Vue.prototype.$navigate = function (where) {
