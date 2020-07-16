@@ -253,7 +253,7 @@ export default {
       onclose () {
         this._connected = false;
 
-        for (const [ handler ] in this._handlers.close) {
+        for (const handler of this._handlers.close) {
           handler();
         }
 
@@ -265,7 +265,7 @@ export default {
       onerror (error) {
         this._connected = false;
 
-        for (const [ handler ] in this._handlers.error) {
+        for (const handler of this._handlers.error) {
           handler(error);
         }
 
@@ -278,16 +278,16 @@ export default {
         if (this.json) {
           try {
             const json = JSON.parse(event.data);
-            for (const [ handler ] in this._handlers.data) {
+            for (const handler of this._handlers.data) {
               handler(json);
             }
           } catch (error) {
-            for (const [ handler ] in this._handlers.message) {
+            for (const handler of this._handlers.message) {
               handler(event.data);
             }
           }
         } else {
-          for (const [ handler ] in this._handlers.message) {
+          for (const handler of this._handlers.message) {
             handler(event.data);
           }
         }
@@ -300,7 +300,7 @@ export default {
         this._retries = 0;
         this._connected = true;
 
-        for (const [ handler ] in this._handlers.open) {
+        for (const handler of this._handlers.open) {
           handler();
         }
       }
