@@ -409,35 +409,39 @@ export default {
 
     // Vuetify Themes
     Vue.prototype.$theme = {
-      init () {
-        Object.assign(this.$theme, {
-          current: () => (this.$vuetify.theme.dark ? 'dark' : 'light'),
+      init (instance, load = true) {
+        Object.assign(instance.$theme, {
+          current: () => (instance.$vuetify.theme.dark ? 'dark' : 'light'),
           dark: () => {
-            this.$vuetify.theme.dark = true;
-            this.$theme.save();
+            instance.$vuetify.theme.dark = true;
+            instance.$theme.save();
           },
           light: () => {
-            this.$vuetify.theme.dark = false;
-            this.$theme.save();
+            instance.$vuetify.theme.dark = false;
+            instance.$theme.save();
           },
           save: () => {
-            localStorage.setItem('theme', this.$theme.current());
+            localStorage.setItem('theme', instance.$theme.current());
           },
           load: () => {
             if (localStorage.getItem('theme') === 'light') {
-              this.$vuetify.theme.dark = false;
+              instance.$vuetify.theme.dark = false;
             } else {
-              this.$vuetify.theme.dark = true;
+              instance.$vuetify.theme.dark = true;
             }
           },
           toggle: () => {
-            if (this.$vuetify.theme.dark) {
-              this.$theme.light();
+            if (instance.$vuetify.theme.dark) {
+              instance.$theme.light();
             } else {
-              this.$theme.dark();
+              instance.$theme.dark();
             }
           },
         });
+
+        if (load) {
+          instance.$theme.load();
+        }
       },
     };
   },
