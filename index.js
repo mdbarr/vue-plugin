@@ -157,26 +157,25 @@ export default {
     // Event Sockets
     class EventSocket {
       constructor (url, options) {
-        this.socket = null;
-
-        this.url = url;
-        this.persistent = false;
         this.autoconnect = false;
-        this.json = true;
-
-        this.retries = 10;
         this.delay = 500;
+        this.json = true;
+        this.persistent = false;
+        this.retries = 10;
+        this.strict = false;
+        this.url = url;
 
         this._connected = false;
-        this._timer = null;
         this._retries = 0;
+        this._socket = null;
+        this._timer = null;
 
         this._handlers = {
           close: new Set(),
           data: new Set(),
           error: new Set(),
           message: new Set(),
-          open: new Set(),
+          connect: new Set(),
         };
 
         if (options) {
@@ -189,51 +188,55 @@ export default {
       }
 
       close () {
-        if (this.socket && this._connected) {
-          this.socket.close();
+        if (this._socket && this._connected) {
+          this._socket.close();
         }
 
         return this;
       }
 
       configure ({
-        url, persistent, autoconnect, json, retries, delay,
+        autoconnect, delay, json, persistent, retries, strict, url,
       } = {}) {
-        if (url) {
-          this.url = url;
-        }
-
-        if (persistent !== undefined) {
-          this.persistent = persistent;
-        }
-
         if (autoconnect !== undefined) {
           this.autoconnect = autoconnect;
-        }
-
-        if (json !== undefined) {
-          this.json = json;
-        }
-
-        if (typeof retries === 'number') {
-          this.retries = Math.max(retries, 0);
         }
 
         if (typeof delay === 'number') {
           this.delay = Math.max(delay, 0);
         }
 
+        if (json !== undefined) {
+          this.json = json;
+        }
+
+        if (persistent !== undefined) {
+          this.persistent = persistent;
+        }
+
+        if (typeof retries === 'number') {
+          this.retries = Math.max(retries, 0);
+        }
+
+        if (typeof strict !== undefined) {
+          this.strict = strict;
+        }
+
+        if (url) {
+          this.url = url;
+        }
+
         return this;
       }
 
       connect () {
-        this.socket = new WebSocket(this.url);
-        this.socket.binaryType = 'arraybuffer';
+        this._socket = new WebSocket(this.url);
+        this._socket.binaryType = 'arraybuffer';
 
-        this.socket.onclose = this.onclose.bind(this);
-        this.socket.onerror = this.onerror.bind(this);
-        this.socket.onmessage = this.onmessage.bind(this);
-        this.socket.onopen = this.onopen.bind(this);
+        this._socket.onclose = this.onclose.bind(this);
+        this._socket.onerror = this.onerror.bind(this);
+        this._socket.onmessage = this.onmessage.bind(this);
+        this._socket.onopen = this.onopen.bind(this);
 
         return this;
       }
@@ -294,8 +297,12 @@ export default {
               handler(json);
             }
           } catch (error) {
-            for (const handler of this._handlers.message) {
-              handler(event.data);
+            if (this.strict) {
+              throw error;
+            } else {
+              for (const handler of this._handlers.message) {
+                handler(event.data);
+              }
             }
           }
         } else {
@@ -312,19 +319,19 @@ export default {
         this._retries = 0;
         this._connected = true;
 
-        for (const handler of this._handlers.open) {
+        for (const handler of this._handlers.connect) {
           handler();
         }
       }
 
       send (data) {
-        if (this._connected && this.socket.readyState === WebSocket.OPEN) {
+        if (this._connected && this._socket.readyState === WebSocket.OPEN) {
           if (typeof data !== 'object') {
-            this.socket.send(data);
+            this._socket.send(data);
           } else {
             try {
               const message = JSON.stringify(data);
-              this.socket.send(message);
+              this._socket.send(message);
             } catch (error) {
               console.error(error);
             }
@@ -373,10 +380,10 @@ export default {
       }
 
       send (object) {
-        if (this._connected && this.socket.readyState === WebSocket.OPEN) {
+        if (this._connected && this._socket.readyState === WebSocket.OPEN) {
           try {
             const message = JSON.stringify(object);
-            this.socket.send(message);
+            this._socket.send(message);
           } catch (error) {
             console.error(`${ this.name }: websocket error`, error);
           }
