@@ -154,6 +154,7 @@ export default {
 
     Vue.prototype.$api = $api;
 
+    // Event Sockets
     class EventSocket {
       constructor (url, options) {
         this.socket = null;
@@ -406,7 +407,38 @@ export default {
       },
     };
 
-    // Theme hook placeholder
-    Vue.prototype.$theme = {};
+    // Vuetify Themes
+    Vue.prototype.$theme = {
+      init () {
+        Object.assign(this.$theme, {
+          current: () => (this.$vuetify.theme.dark ? 'dark' : 'light'),
+          dark: () => {
+            this.$vuetify.theme.dark = true;
+            this.$theme.save();
+          },
+          light: () => {
+            this.$vuetify.theme.dark = false;
+            this.$theme.save();
+          },
+          save: () => {
+            localStorage.setItem('theme', this.$theme.current());
+          },
+          load: () => {
+            if (localStorage.getItem('theme') === 'light') {
+              this.$vuetify.theme.dark = false;
+            } else {
+              this.$vuetify.theme.dark = true;
+            }
+          },
+          toggle: () => {
+            if (this.$vuetify.theme.dark) {
+              this.$theme.light();
+            } else {
+              this.$theme.dark();
+            }
+          },
+        });
+      },
+    };
   },
 };
