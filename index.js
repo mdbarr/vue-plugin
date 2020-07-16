@@ -192,6 +192,8 @@ export default {
         if (this.socket && this._connected) {
           this.socket.close();
         }
+
+        return this;
       }
 
       configure ({
@@ -220,6 +222,8 @@ export default {
         if (typeof delay === 'number') {
           this.delay = Math.max(delay, 0);
         }
+
+        return this;
       }
 
       connect () {
@@ -230,24 +234,32 @@ export default {
         this.socket.onerror = this.onerror.bind(this);
         this.socket.onmessage = this.onmessage.bind(this);
         this.socket.onopen = this.onopen.bind(this);
+
+        return this;
       }
 
       ensure () {
         if (!this._connected) {
           this.connect();
         }
+
+        return this;
       }
 
       off (type, handler) {
         if (type in this._handlers && typeof handler === 'function') {
           this._handlers[type].delete(handler);
         }
+
+        return this;
       }
 
       on (type, handler) {
         if (type in this._handlers && typeof handler === 'function') {
           this._handlers[type].add(handler);
         }
+
+        return this;
       }
 
       onclose () {
@@ -318,6 +330,8 @@ export default {
             }
           }
         }
+
+        return this;
       }
     }
 
@@ -338,6 +352,8 @@ export default {
         if (options.events) {
           this.events = options.events;
         }
+
+        return this;
       }
 
       onmessage (message) {
@@ -365,6 +381,8 @@ export default {
             console.error(`${ this.name }: websocket error`, error);
           }
         }
+
+        return this;
       }
     }
 
