@@ -161,6 +161,7 @@ export default {
         this.url = url;
         this.persistent = false;
         this.autoconnect = false;
+        this.json = true;
 
         this.retries = 10;
         this.delay = 500;
@@ -169,11 +170,19 @@ export default {
         this._timer = null;
         this._retries = 0;
 
+        this._handlers = {
+          close: new Set(),
+          data: new Set(),
+          error: new Set(),
+          message: new Set(),
+          open: new Set(),
+        };
+
         if (options) {
           this.configure(options);
         }
 
-        if (this.auto) {
+        if (this.autoconnect) {
           this.connect();
         }
       }
@@ -185,7 +194,7 @@ export default {
       }
 
       configure ({
-        url, persistent, autoconnect, retries, delay,
+        url, persistent, autoconnect, json, retries, delay,
       } = {}) {
         if (url) {
           this.url = url;
@@ -197,6 +206,10 @@ export default {
 
         if (autoconnect !== undefined) {
           this.autoconnect = autoconnect;
+        }
+
+        if (json !== undefined) {
+          this.json = json;
         }
 
         if (typeof retries === 'number') {
@@ -224,8 +237,25 @@ export default {
         }
       }
 
+      off (type, handler) {
+        if (type in this._handlers && typeof handler === 'function') {
+          this._handlers[type].delete(handler);
+        }
+      }
+
+      on (type, handler) {
+        if (type in this._handlers && typeof handler === 'function') {
+          this._handlers[type].add(handler);
+        }
+      }
+
       onclose () {
         this._connected = false;
+
+        for (const [ handler ] in this._handlers.close) {
+          handler();
+        }
+
         if (this.persistent) {
           this.reconnect();
         }
@@ -234,19 +264,31 @@ export default {
       onerror (error) {
         this._connected = false;
 
-        console.error(error);
+        for (const [ handler ] in this._handlers.error) {
+          handler(error);
+        }
 
         if (this.persistent) {
           this.reconnect();
         }
       }
 
-      onmessage (message) {
-        try {
-          const data = JSON.parse(message.data);
-          console.log(data);
-        } catch (error) {
-          console.log(`${ this.name }: websocket error`, error);
+      onmessage (event) {
+        if (this.json) {
+          try {
+            const json = JSON.parse(event.data);
+            for (const [ handler ] in this._handlers.data) {
+              handler(json);
+            }
+          } catch (error) {
+            for (const [ handler ] in this._handlers.message) {
+              handler(event.data);
+            }
+          }
+        } else {
+          for (const [ handler ] in this._handlers.message) {
+            handler(event.data);
+          }
         }
       }
 
@@ -256,6 +298,10 @@ export default {
         }
         this._retries = 0;
         this._connected = true;
+
+        for (const [ handler ] in this._handlers.open) {
+          handler();
+        }
       }
 
       send (data) {
