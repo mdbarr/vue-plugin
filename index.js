@@ -226,10 +226,10 @@ export default {
         this.socket = new WebSocket(this.url);
         this.socket.binaryType = 'arraybuffer';
 
-        this.socket.onclose = this.onclose;
-        this.socket.onerror = this.onerror;
-        this.socket.onmessage = this.onmessage;
-        this.socket.onopen = this.onopen;
+        this.socket.onclose = this.onclose.bind(this);
+        this.socket.onerror = this.onerror.bind(this);
+        this.socket.onmessage = this.onmessage.bind(this);
+        this.socket.onopen = this.onopen.bind(this);
       }
 
       ensure () {
