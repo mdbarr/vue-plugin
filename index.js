@@ -165,8 +165,8 @@ export default {
         this.strict = false;
         this.url = this.inferUrl(url);
 
+        this._attempts = 0;
         this._connected = false;
-        this._retries = 0;
         this._socket = null;
         this._timer = null;
 
@@ -327,11 +327,23 @@ export default {
         if (this._timer) {
           clearTimeout(this._timer);
         }
-        this._retries = 0;
+        this._attempts = 0;
         this._connected = true;
 
         for (const handler of this._handlers.connect) {
           handler();
+        }
+      }
+
+      reconnect () {
+        if (this._timer) {
+          clearTimeout(this._timer);
+        }
+
+        this._attempts += 1;
+
+        if (this._attempts < this.retries) {
+          this._timer = setTimeout(this.connect.bind(this), this.delay);
         }
       }
 
