@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@metastack/events": "^0.2.0",
+    "@metastack/events": "^0.2.1",
     "axios": "^0.19.2",
     "barrkeep": "^2.6.6"
   },
