@@ -162,7 +162,6 @@ export default {
         this.json = true;
         this.persistent = false;
         this.retries = 10;
-        this.strict = false;
         this.url = this.inferUrl(url);
 
         this._attempts = 0;
@@ -196,7 +195,7 @@ export default {
       }
 
       configure ({
-        autoconnect, delay, json, persistent, retries, strict, url,
+        autoconnect, delay, json, persistent, retries, url,
       } = {}) {
         if (autoconnect !== undefined) {
           this.autoconnect = autoconnect;
@@ -216,10 +215,6 @@ export default {
 
         if (typeof retries === 'number') {
           this.retries = Math.max(retries, 0);
-        }
-
-        if (typeof strict !== undefined) {
-          this.strict = strict;
         }
 
         if (url) {
@@ -308,7 +303,7 @@ export default {
               handler(json);
             }
           } catch (error) {
-            if (this.strict) {
+            if (this.json === 'strict') {
               throw error;
             } else {
               for (const handler of this._handlers.message) {
@@ -349,15 +344,19 @@ export default {
 
       send (data) {
         if (this._connected && this._socket.readyState === WebSocket.OPEN) {
-          if (typeof data !== 'object') {
-            this._socket.send(data);
-          } else {
+          if (this.json) {
             try {
               const message = JSON.stringify(data);
               this._socket.send(message);
             } catch (error) {
-              console.error(error);
+              if (this.json === 'strict') {
+                throw error;
+              } else {
+                this._socket.send(data.toString());
+              }
             }
+          } else {
+            this._socket.send(data.toString());
           }
         }
 
