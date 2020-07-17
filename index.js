@@ -156,14 +156,14 @@ export default {
 
     // Event Sockets
     class EventSocket {
-      constructor (url, options) {
+      constructor (url = '/', options) {
         this.autoconnect = false;
         this.delay = 500;
         this.json = true;
         this.persistent = false;
         this.retries = 10;
         this.strict = false;
-        this.url = url;
+        this.url = this.inferUrl(url);
 
         this._connected = false;
         this._retries = 0;
@@ -223,7 +223,7 @@ export default {
         }
 
         if (url) {
-          this.url = url;
+          this.url = this.inferUrl(url);
         }
 
         return this;
@@ -247,6 +247,17 @@ export default {
         }
 
         return this;
+      }
+
+      inferUrl (fragment) {
+        if (/^wss?:\/\//i.test(fragment)) {
+          return fragment;
+        }
+        const protocol = window.location.protocol === 'https' ? 'wss' : 'ws';
+        const host = window.location.host;
+        const path = fragment.startsWith('/') ? fragment : `/${ fragment }`;
+
+        return `${ protocol }://${ host }${ path }`;
       }
 
       off (type, handler) {
