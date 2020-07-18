@@ -1,6 +1,6 @@
 {
   "name": "@metastack/vue-plugin",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Vue Plugin for common API and WebSocket functionality",
   "main": "index.js",
   "repository": "git@github.com:mdbarr/metastack-vue-plugin.git",
