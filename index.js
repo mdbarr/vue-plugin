@@ -160,12 +160,14 @@ export default {
         this.autoconnect = false;
         this.delay = 500;
         this.json = true;
+        this.keepalive = true;
         this.persistent = false;
         this.retries = 10;
         this.url = this.inferUrl(url);
 
         this._attempts = 0;
         this._connected = false;
+        this._keepalive = 0;
         this._socket = null;
         this._timer = null;
 
@@ -195,7 +197,7 @@ export default {
       }
 
       configure ({
-        autoconnect, delay, json, persistent, retries, url,
+        autoconnect, delay, json, keepalive, persistent, retries, url,
       } = {}) {
         if (autoconnect !== undefined) {
           this.autoconnect = autoconnect;
@@ -207,6 +209,10 @@ export default {
 
         if (json !== undefined) {
           this.json = json;
+        }
+
+        if (keepalive !== undefined) {
+          this.keepalive = keepalive;
         }
 
         if (persistent !== undefined) {
@@ -296,24 +302,26 @@ export default {
       }
 
       onmessage (event) {
-        if (this.json) {
-          try {
-            const json = JSON.parse(event.data);
-            for (const handler of this._handlers.data) {
-              handler(json);
-            }
-          } catch (error) {
-            if (this.json === 'strict') {
-              throw error;
-            } else {
-              for (const handler of this._handlers.message) {
-                handler(event.data);
+        if (event.data !== 'PONG') {
+          if (this.json) {
+            try {
+              const json = JSON.parse(event.data);
+              for (const handler of this._handlers.data) {
+                handler(json);
+              }
+            } catch (error) {
+              if (this.json === 'strict') {
+                throw error;
+              } else {
+                for (const handler of this._handlers.message) {
+                  handler(event.data);
+                }
               }
             }
-          }
-        } else {
-          for (const handler of this._handlers.message) {
-            handler(event.data);
+          } else {
+            for (const handler of this._handlers.message) {
+              handler(event.data);
+            }
           }
         }
       }
@@ -324,6 +332,20 @@ export default {
         }
         this._attempts = 0;
         this._connected = true;
+
+        if (this.keepalive) {
+          if (this._keepalive) {
+            clearInterval(this._keepalive);
+          }
+
+          this._keepalive = setInterval(() => {
+            if (this._socket.readyState === WebSocket.OPEN) {
+              this._socket.send('PING');
+            } else {
+              clearInterval(this._keepalive);
+            }
+          }, 5000);
+        }
 
         for (const handler of this._handlers.connect) {
           handler();
