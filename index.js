@@ -33,6 +33,7 @@ export default {
       clone: (object) => JSON.parse(JSON.stringify(object)),
       debounce: utils.debounce,
       deepClone: utils.deepClone,
+      distinct: utils.distinct,
       duration: utils.duration,
       equal: utils.deepEqual,
       expand: utils.expand,
@@ -41,7 +42,9 @@ export default {
       merge: utils.merge,
       milliseconds: utils.milliseconds,
       once: utils.once,
+      poll: utils.poll,
       project: utils.project,
+      range: utils.range,
       remove: utils.remove,
       resolve: utils.resolve,
       resolves: utils.resolves,
@@ -75,7 +78,9 @@ export default {
         return true;
       },
       size: utils.size,
+      times: utils.times,
       timestamp: utils.timestamp,
+      unique: utils.unique,
     };
     Vue.prototype.$utils = $utils;
 
