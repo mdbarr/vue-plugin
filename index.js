@@ -160,14 +160,12 @@ export default {
         this.autoconnect = false;
         this.delay = 500;
         this.json = true;
-        this.keepalive = true;
         this.persistent = false;
         this.retries = 10;
         this.url = this.inferUrl(url);
 
         this._attempts = 0;
         this._connected = false;
-        this._keepalive = 0;
         this._socket = null;
         this._timer = null;
 
@@ -197,7 +195,7 @@ export default {
       }
 
       configure ({
-        autoconnect, delay, json, keepalive, persistent, retries, url,
+        autoconnect, delay, json, persistent, retries, url,
       } = {}) {
         if (autoconnect !== undefined) {
           this.autoconnect = autoconnect;
@@ -209,10 +207,6 @@ export default {
 
         if (json !== undefined) {
           this.json = json;
-        }
-
-        if (keepalive !== undefined) {
-          this.keepalive = keepalive;
         }
 
         if (persistent !== undefined) {
@@ -332,20 +326,6 @@ export default {
         }
         this._attempts = 0;
         this._connected = true;
-
-        if (this.keepalive) {
-          if (this._keepalive) {
-            clearInterval(this._keepalive);
-          }
-
-          this._keepalive = setInterval(() => {
-            if (this._socket.readyState === WebSocket.OPEN) {
-              this._socket.send('PING');
-            } else {
-              clearInterval(this._keepalive);
-            }
-          }, 5000);
-        }
 
         for (const handler of this._handlers.connect) {
           handler();
