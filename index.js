@@ -16,15 +16,24 @@ const state = {};
 export default {
   install (Vue) {
     // Filters
+    Vue.filter('binary', transforms.binary);
     Vue.filter('bytes', transforms.bytes);
     Vue.filter('camelcase', transforms.camelcase);
     Vue.filter('capitalize', transforms.capitalize);
     Vue.filter('currency', transforms.currency);
     Vue.filter('duration', transforms.duration);
+    Vue.filter('hexadecimal', transforms.hexadecimal);
+    Vue.filter('kebabcase', transforms.kebabcase);
     Vue.filter('lowercase', transforms.lowercase);
     Vue.filter('number', transforms.number);
+    Vue.filter('octal', transforms.octal);
+    Vue.filter('pascalcase', transforms.pascalcase);
+    Vue.filter('pluralize', transforms.pluralize);
     Vue.filter('reverse', transforms.reverse);
     Vue.filter('round', utils.precisionRound);
+    Vue.filter('sentencecase', transforms.sentencecase);
+    Vue.filter('snakecase', transforms.snakecase);
+    Vue.filter('titlecase', transforms.titlecase);
     Vue.filter('trim', transforms.trim);
     Vue.filter('uppercase', transforms.uppercase);
 
