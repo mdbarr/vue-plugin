@@ -1,6 +1,6 @@
 import axios from 'axios';
 import utils from 'barrkeep/utils';
-import events from '@metastack/events';
+import events from '@hyperingenuity/events';
 import transforms from 'barrkeep/transforms';
 const qs = require('querystring');
 

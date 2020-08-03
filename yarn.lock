@@ -23,21 +23,21 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@mdbarr/uscript@^0.3.0":
+"@hyperingenuity/events@^0.3.0":
   version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@mdbarr/uscript/-/uscript-0.3.0.tgz#ef8f02b1588bd36e1553412a33b6b6e283322bbe"
-  integrity sha512-DN+P8EFzRh3T/Q14o10YYSxOl0SAbPvpnn1QgaSgZ731eVIn4NzorUEpEbQe/4kJ788qErQRoKooxiLFpp0HOQ==
+  resolved "https://registry.yarnpkg.com/@hyperingenuity/events/-/events-0.3.0.tgz#d17ebe848789747f851330bd5ba93d3710d32b11"
+  integrity sha512-eMmaXpOIiaPSgiblZ2vW8IUMU5yv+3u+Y+CmfXWhIXlh7bXQFgGP5uReIw5rPWftr8Q8ZmfPclREMiU4F4H+Lw==
   dependencies:
-    barrkeep "^2.6.1"
-
-"@metastack/events@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@metastack/events/-/events-0.2.1.tgz#4cb0b569237850e0a998924c71005f04e57522ff"
-  integrity sha512-RYB5MJDQMepm7nI+5Mgnodft/b1PZPxgGjWkWbSgq7vQgLVM7sqSo0/VK31dMPJvpLGFff4xNsQJBuNLzoKPBg==
-  dependencies:
-    "@mdbarr/uscript" "^0.3.0"
+    "@hyperingenuity/uscript" "^0.4.0"
     barrkeep "^2.6.6"
-    uuid "^8.2.0"
+    uuid "^8.3.0"
+
+"@hyperingenuity/uscript@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@hyperingenuity/uscript/-/uscript-0.4.0.tgz#7807b1a13dd160a2a39656bb1a307a6f0dfe49ce"
+  integrity sha512-KSBptDCLul4aBxPot/ybQrOOlOkpPeZNsefPBZXBHAAQDLXdgU7kgt6ciSJXsii9zwa2EYs73BVJjULrGNz2/g==
+  dependencies:
+    barrkeep "^2.6.6"
 
 "@types/color-name@^1.1.1":
   version "1.1.1"
@@ -118,7 +118,7 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-barrkeep@^2.6.1, barrkeep@^2.6.6:
+barrkeep@^2.6.6:
   version "2.6.6"
   resolved "https://registry.yarnpkg.com/barrkeep/-/barrkeep-2.6.6.tgz#bbac1ed836a938752077938ca298816a72990e25"
   integrity sha512-Rr3OHsNfPla3zzLedM7wh6HkYoG1fXCidYs0/nkONZCQ8j91Ci2ETZ+a7nMrIy7ijqXjLjWEytjxyaMuGvwLQw==
@@ -726,10 +726,10 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-uuid@^8.2.0:
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.2.0.tgz#cb10dd6b118e2dada7d0cd9730ba7417c93d920e"
-  integrity sha512-CYpGiFTUrmI6OBMkAdjSDM0k5h8SkkiTP4WAjQgDgNB1S3Ou9VBEvr6q0Kv2H1mMk7IWfxYGpMH5sd5AvcIV2Q==
+uuid@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.0.tgz#ab738085ca22dc9a8c92725e459b1d507df5d6ea"
+  integrity sha512-fX6Z5o4m6XsXBdli9g7DtWgAx+osMsRRZFKma1mIUsLCz6vRvv+pz5VNbyu9UEDzpMWulZfvpgb/cmDXVulYFQ==
 
 v8-compile-cache@^2.0.3:
   version "2.1.1"
