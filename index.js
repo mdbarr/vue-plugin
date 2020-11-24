@@ -477,10 +477,7 @@ export default {
 
         this.$navigate('signin');
 
-        $events.emit({
-          type: 'state:session:delete',
-          data: null,
-        });
+        $events.emit({ type: 'state:session:delete' });
       }
     };
 
@@ -488,10 +485,19 @@ export default {
     Vue.prototype.$storage = {
       clear: () => {
         window.localStorage.clear();
+        $events.emit({ type: 'storage:cleared' });
       },
       getItem: (key) => JSON.parse(window.localStorage.getItem(key)),
+      removeItem: (key) => {
+        window.localStorage.removeItem(key);
+        $events.emit({ type: `storage:${ key }:delete` });
+      },
       setItem: (key, value) => {
         window.localStorage.setItem(key, JSON.stringify(value));
+        $events.emit({
+          type: `storage:${ key }:set`,
+          data: value,
+        });
       },
     };
 
