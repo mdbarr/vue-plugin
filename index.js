@@ -14,7 +14,7 @@ const defaults = {
 let state = {};
 
 export default {
-  install (Vue, pluginOptions) {
+  install (Vue, pluginOptions = {}) {
     // Filters
     Vue.filter('binary', transforms.binary);
     Vue.filter('bytes', transforms.bytes);
