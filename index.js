@@ -509,10 +509,12 @@ export default {
           dark: () => {
             instance.$vuetify.theme.dark = true;
             instance.$theme.save();
+            $events.emit({ type: 'theme:change:dark' });
           },
           light: () => {
             instance.$vuetify.theme.dark = false;
             instance.$theme.save();
+            $events.emit({ type: 'theme:change:light' });
           },
           save: () => {
             localStorage.setItem('theme', instance.$theme.current());
