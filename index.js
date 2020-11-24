@@ -436,6 +436,14 @@ export default {
 
     // Navigation
     Vue.prototype.$navigate = function (where) {
+      $events.emit({
+        type: 'app:navigation:change',
+        data: {
+          from: this.$router.currentRoute,
+          to: where,
+        },
+      });
+
       if (typeof where === 'string' &&
         (!this.$router.currentRoute || this.$router.currentRoute.name !== where)) {
         this.$router.push({ name: where });
@@ -467,7 +475,7 @@ export default {
         defaults.headers.Authorization = `Bearer ${ session.id }`;
 
         $events.emit({
-          type: 'state:session:create',
+          type: 'app:session:create',
           data: session,
         });
       } else {
@@ -477,7 +485,7 @@ export default {
 
         this.$navigate('signin');
 
-        $events.emit({ type: 'state:session:delete' });
+        $events.emit({ type: 'app:session:delete' });
       }
     };
 
@@ -509,12 +517,12 @@ export default {
           dark: () => {
             instance.$vuetify.theme.dark = true;
             instance.$theme.save();
-            $events.emit({ type: 'theme:change:dark' });
+            $events.emit({ type: 'app:theme:dark' });
           },
           light: () => {
             instance.$vuetify.theme.dark = false;
             instance.$theme.save();
-            $events.emit({ type: 'theme:change:light' });
+            $events.emit({ type: 'app:theme:light' });
           },
           save: () => {
             localStorage.setItem('theme', instance.$theme.current());
