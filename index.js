@@ -11,10 +11,10 @@ const defaults = {
   withCredentials: false,
 };
 
-const state = {};
+let state = {};
 
 export default {
-  install (Vue) {
+  install (Vue, pluginOptions) {
     // Filters
     Vue.filter('binary', transforms.binary);
     Vue.filter('bytes', transforms.bytes);
@@ -442,6 +442,21 @@ export default {
       } else if (typeof where === 'object') {
         this.$router.push(where);
       }
+    };
+
+    // State - enable shared state for sessioning
+    if (pluginOptions.state) {
+      state = pluginOptions.state;
+    }
+
+    Vue.prototype.$state = (shared) => {
+      if (shared) {
+        state = shared;
+      } else if (shared === null) {
+        state = {};
+      }
+
+      return state;
     };
 
     // Sessions
