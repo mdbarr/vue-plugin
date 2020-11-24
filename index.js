@@ -461,16 +461,26 @@ export default {
 
     // Sessions
     Vue.prototype.$session = function (session) {
-      if (session) {
+      if (session && session.id) {
         state.session = session;
 
         defaults.headers.Authorization = `Bearer ${ session.id }`;
+
+        $events.emit({
+          type: 'state:session:create',
+          data: session,
+        });
       } else {
         state.session = null;
 
         delete defaults.headers.Authorization;
 
         this.$navigate('signin');
+
+        $events.emit({
+          type: 'state:session:delete',
+          data: null,
+        });
       }
     };
 
