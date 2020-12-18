@@ -190,6 +190,7 @@ export default {
         this._timer = null;
 
         this._handlers = {
+          abort: new Set(),
           close: new Set(),
           data: new Set(),
           error: new Set(),
@@ -361,6 +362,10 @@ export default {
 
         if (this._attempts < this.retries) {
           this._timer = setTimeout(this.connect.bind(this), this.delay);
+        } else {
+          for (const handler of this._handlers.abort) {
+            handler();
+          }
         }
       }
 
