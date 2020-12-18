@@ -11,10 +11,12 @@ const defaults = {
   withCredentials: false,
 };
 
-let state = {};
+let shared = {};
 
 export default {
-  install (Vue, pluginOptions = {}) {
+  install (Vue, {
+    state = false, cookie = false, withCredentials,
+  } = {}) {
     // Filters
     Vue.filter('binary', transforms.binary);
     Vue.filter('bytes', transforms.bytes);
@@ -98,6 +100,10 @@ export default {
     Vue.prototype.$events = $events;
 
     // API Interface
+    if (withCredentials !== undefined) {
+      defaults.withCredentials = withCredentials;
+    }
+
     const mock = (options, response = {}) => Promise.resolve(response);
 
     function api (method, url, options) {
@@ -453,33 +459,37 @@ export default {
     };
 
     // State - enable shared state for sessioning
-    if (pluginOptions.state) {
-      state = pluginOptions.state;
+    if (state) {
+      shared = state;
     }
 
-    Vue.prototype.$state = (shared) => {
-      if (shared) {
-        state = shared;
+    Vue.prototype.$state = (other) => {
+      if (other) {
+        shared = other;
       } else if (shared === null) {
-        state = {};
+        shared = {};
       }
 
-      return state;
+      return shared;
     };
 
     // Sessions
     Vue.prototype.$session = function (session) {
       if (session && session.id) {
-        state.session = session;
+        shared.session = session;
 
         defaults.headers.Authorization = `Bearer ${ session.id }`;
+
+        if (cookie) {
+          document.cookie = `${ cookie }=${ session.id };secure`;
+        }
 
         $events.emit({
           type: 'app:session:create',
           data: session,
         });
       } else {
-        state.session = null;
+        shared.session = null;
 
         delete defaults.headers.Authorization;
 
