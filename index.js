@@ -496,6 +496,10 @@ export default {
       } else {
         shared.session = null;
 
+        if (cookie) {
+          document.cookie = `${ cookie }=;secure`;
+        }
+
         delete defaults.headers.Authorization;
 
         this.$navigate('signin');
