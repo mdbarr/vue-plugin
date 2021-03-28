@@ -10,10 +10,10 @@
   "dependencies": {
     "@hyperingenuity/events": "^0.3.0",
     "axios": "^0.21.1",
-    "barrkeep": "^2.8.0"
+    "barrkeep": "^2.9.2"
   },
   "devDependencies": {
-    "eslint": "^7.18.0"
+    "eslint": "^7.23.0"
   },
   "scripts": {
     "lint": "eslint index.js"
