@@ -2,7 +2,6 @@ import axios from 'axios';
 import utils from 'barrkeep/utils';
 import events from '@hyperingenuity/events';
 import transforms from 'barrkeep/transforms';
-const qs = require('querystring');
 
 const paramsRegExp = /\/:([^/]+)/g;
 
@@ -133,11 +132,7 @@ export default {
         } else if (key === 'data' || key === 'body') {
           config.data = value;
         } else if (key === 'params' || key === 'query' || key === 'qs') {
-          if (typeof value === 'string') {
-            config.params = qs.parse(value);
-          } else {
-            config.params = value;
-          }
+          config.params = value;
         } else if (key === 'headers') {
           Object.assign(config.headers, value);
         } else if (key === 'auth' || key === 'authorization') {
