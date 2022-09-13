@@ -143,6 +143,11 @@ barrkeep@^2.11.0, barrkeep@^2.6.6:
   resolved "https://registry.yarnpkg.com/barrkeep/-/barrkeep-2.11.0.tgz#5309dae6d042348b703dc2a41c9601f4e029feec"
   integrity sha512-rLyb5ZVLGnGvY65+EZwcmyrEpHFl+x4+XCNf9EZOW+lvKi7ovUFQzxv+WeEEMEm6OooPeI7qvszrr3AocQICow==
 
+barrkeep@^2.11.1:
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/barrkeep/-/barrkeep-2.11.1.tgz#a12a1c4c689448cfce65071ed8dc9b1299ea621d"
+  integrity sha512-E12rpsKv/lRkH4G3n4VELTSEJw1Bgbe8z4443OTlba50STMxoduR9t1smJEEX57vaz6RTDRCCyW2bFYlIqQIVw==
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
