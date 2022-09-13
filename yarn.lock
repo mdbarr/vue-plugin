@@ -41,21 +41,21 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@hyperingenuity/events@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@hyperingenuity/events/-/events-0.4.0.tgz#269e137fc933d33486caaa9827e8b37d9ffd7f2b"
-  integrity sha512-lPlk17RCNKaE8JmlQiclJw76N13uSreuEdxUD3AtZMUU0EFnuCIjaZ/ZbOadMuzBrrHpKGyb47KmEOUUM+0OIg==
+"@hyperingenuity/events@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@hyperingenuity/events/-/events-0.4.1.tgz#7dfdf3f4735279f9d1fda8fa44040e1e3061c447"
+  integrity sha512-rh7eUrf4L2K2KOWjq4gsto1vbLaTRB3SegUh+FHdTEASa333Am2T0smk9T+A2Np/RpCSwJYCozqS9FifaH9PqQ==
   dependencies:
-    "@hyperingenuity/uscript" "^0.4.0"
+    "@hyperingenuity/uscript" "^0.4.1"
     barrkeep "^2.11.0"
     uuid "^9.0.0"
 
-"@hyperingenuity/uscript@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@hyperingenuity/uscript/-/uscript-0.4.0.tgz#7807b1a13dd160a2a39656bb1a307a6f0dfe49ce"
-  integrity sha512-KSBptDCLul4aBxPot/ybQrOOlOkpPeZNsefPBZXBHAAQDLXdgU7kgt6ciSJXsii9zwa2EYs73BVJjULrGNz2/g==
+"@hyperingenuity/uscript@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@hyperingenuity/uscript/-/uscript-0.4.1.tgz#4b8c5c407ac1518f79bf77853cf6cb62a5d64cf8"
+  integrity sha512-0Neys7ezQAABAXN/jeF39OOzCekHQ8i7tZFVtSIFYLiTbZK2OAvDZ/l50LlEPOvPGzFq+g2yBVO+nKZCNSLaYQ==
   dependencies:
-    barrkeep "^2.6.6"
+    barrkeep "^2.11.1"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -138,7 +138,7 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-barrkeep@^2.11.0, barrkeep@^2.6.6:
+barrkeep@^2.11.0:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/barrkeep/-/barrkeep-2.11.0.tgz#5309dae6d042348b703dc2a41c9601f4e029feec"
   integrity sha512-rLyb5ZVLGnGvY65+EZwcmyrEpHFl+x4+XCNf9EZOW+lvKi7ovUFQzxv+WeEEMEm6OooPeI7qvszrr3AocQICow==
