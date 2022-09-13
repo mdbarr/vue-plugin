@@ -1,6 +1,6 @@
 {
   "name": "@hyperingenuity/vue-plugin",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Vue Plugin for common API and WebSocket functionality",
   "main": "index.js",
   "repository": "git@github.com:mdbarr/vue-plugin.git",
