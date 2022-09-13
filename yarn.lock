@@ -41,19 +41,19 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@hyperingenuity/events@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@hyperingenuity/events/-/events-0.4.1.tgz#7dfdf3f4735279f9d1fda8fa44040e1e3061c447"
-  integrity sha512-rh7eUrf4L2K2KOWjq4gsto1vbLaTRB3SegUh+FHdTEASa333Am2T0smk9T+A2Np/RpCSwJYCozqS9FifaH9PqQ==
+"@hyperingenuity/events@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@hyperingenuity/events/-/events-0.4.2.tgz#93a414ef53d06d4a6dc45809180e305174e38dae"
+  integrity sha512-Z5QZot1FvL/M5GO+sJhm9VBO4wgTB204DftCSa0izrAbtWYgqZlexd+roYeS/pCi6V+skGX9C6uYumvd7aVE1g==
   dependencies:
-    "@hyperingenuity/uscript" "^0.4.1"
-    barrkeep "^2.11.0"
+    "@hyperingenuity/uscript" "^0.4.3"
+    barrkeep "^2.11.1"
     uuid "^9.0.0"
 
-"@hyperingenuity/uscript@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@hyperingenuity/uscript/-/uscript-0.4.1.tgz#4b8c5c407ac1518f79bf77853cf6cb62a5d64cf8"
-  integrity sha512-0Neys7ezQAABAXN/jeF39OOzCekHQ8i7tZFVtSIFYLiTbZK2OAvDZ/l50LlEPOvPGzFq+g2yBVO+nKZCNSLaYQ==
+"@hyperingenuity/uscript@^0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@hyperingenuity/uscript/-/uscript-0.4.3.tgz#a26d0be688636d8a54fabf7b4c1e6de9edafc4d8"
+  integrity sha512-fy28FJ6q2PmF4R1xqVSLvGojP3equCIezunNq6Zvs6E6kAELmAG2c/qk+sHvlUuZc+Bk6X83XEXeDazNLOmeVw==
   dependencies:
     barrkeep "^2.11.1"
 
@@ -137,11 +137,6 @@ balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
-
-barrkeep@^2.11.0:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/barrkeep/-/barrkeep-2.11.0.tgz#5309dae6d042348b703dc2a41c9601f4e029feec"
-  integrity sha512-rLyb5ZVLGnGvY65+EZwcmyrEpHFl+x4+XCNf9EZOW+lvKi7ovUFQzxv+WeEEMEm6OooPeI7qvszrr3AocQICow==
 
 barrkeep@^2.11.1:
   version "2.11.1"
