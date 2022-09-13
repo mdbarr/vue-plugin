@@ -41,14 +41,14 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@hyperingenuity/events@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@hyperingenuity/events/-/events-0.3.1.tgz#b0541d07439809c6d07ed06775f131b75f1b865c"
-  integrity sha512-r96wCpsrYGU+BUQnZOJ4L7MqDKOiJNZUEntHlPoG+2vbV5lCY7uyCHtoMAl4PRzx51WCgON1eglTEfD3L+vLPA==
+"@hyperingenuity/events@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@hyperingenuity/events/-/events-0.4.0.tgz#269e137fc933d33486caaa9827e8b37d9ffd7f2b"
+  integrity sha512-lPlk17RCNKaE8JmlQiclJw76N13uSreuEdxUD3AtZMUU0EFnuCIjaZ/ZbOadMuzBrrHpKGyb47KmEOUUM+0OIg==
   dependencies:
     "@hyperingenuity/uscript" "^0.4.0"
-    barrkeep "^2.9.2"
-    uuid "^8.3.2"
+    barrkeep "^2.11.0"
+    uuid "^9.0.0"
 
 "@hyperingenuity/uscript@^0.4.0":
   version "0.4.0"
@@ -138,10 +138,10 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-barrkeep@^2.10.2, barrkeep@^2.6.6, barrkeep@^2.9.2:
-  version "2.10.2"
-  resolved "https://registry.yarnpkg.com/barrkeep/-/barrkeep-2.10.2.tgz#3a2fdd50808ef3bc3e64d24176d072503348cbef"
-  integrity sha512-xx7riZ8InFiEOfPh+1TKctAE8VktC5VnGgVdNy+4b0KGRBIFbmVJ1kteHguQ3f12MH3ONyR1GWRHC1Jz1k04og==
+barrkeep@^2.11.0, barrkeep@^2.6.6:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/barrkeep/-/barrkeep-2.11.0.tgz#5309dae6d042348b703dc2a41c9601f4e029feec"
+  integrity sha512-rLyb5ZVLGnGvY65+EZwcmyrEpHFl+x4+XCNf9EZOW+lvKi7ovUFQzxv+WeEEMEm6OooPeI7qvszrr3AocQICow==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -412,9 +412,9 @@ flatted@^3.1.0:
   integrity sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==
 
 follow-redirects@^1.14.9:
-  version "1.15.1"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.1.tgz#0ca6a452306c9b276e4d3127483e29575e207ad5"
-  integrity sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
+  integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
 
 form-data@^4.0.0:
   version "4.0.0"
@@ -798,10 +798,10 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-uuid@^8.3.2:
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
-  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+uuid@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 which@^2.0.1:
   version "2.0.2"
