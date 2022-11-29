@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@hyperingenuity/events": "^0.4.2",
+    "@hyperingenuity/events": "^0.4.3",
     "axios": "^0.27.2",
     "barrkeep": "^2.11.1"
   },

@@ -41,10 +41,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@hyperingenuity/events@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@hyperingenuity/events/-/events-0.4.2.tgz#93a414ef53d06d4a6dc45809180e305174e38dae"
-  integrity sha512-Z5QZot1FvL/M5GO+sJhm9VBO4wgTB204DftCSa0izrAbtWYgqZlexd+roYeS/pCi6V+skGX9C6uYumvd7aVE1g==
+"@hyperingenuity/events@^0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@hyperingenuity/events/-/events-0.4.3.tgz#18e3c3ecb974f8ffcfcb49388335f2246ef839d3"
+  integrity sha512-kB0kB/X/EmlcS6aaeFJ0I2jEm1+CnrGp9Bx6oCeFuIk+g5V6jGGy5ycXfdVghnMrVS9uKzMekOCzWRgbnH+1eg==
   dependencies:
     "@hyperingenuity/uscript" "^0.4.3"
     barrkeep "^2.11.1"
