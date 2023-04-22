@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios').default;
 import utils from 'barrkeep/utils';
 import events from '@hyperingenuity/events';
 import transforms from 'barrkeep/transforms';
